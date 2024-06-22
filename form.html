@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            flex-direction: column;
+            text-align: center;
+            background-color: lightblue;
+        }
+
+        .formBlock {
+            border: 2 px solid rgb(28, 28, 205);
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin-top: 10%;
+        }
+
+        .formBlock h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .formBlock form {
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .formBlock label {
+            margin-top: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: darkblue
+        }
+
+        .formBlock input[type="text"],
+        .formBlock input[type="password"],
+        .formBlock select {
+            margin-top: 5px;
+            padding: 5px;
+            border: 2px solid rgb(28, 28, 205);
+            border-radius: 5px;
+
+        }
+
+        .formBlock .radio {
+            display: flex;
+            margin-left: 50px;
+            margin-right: 20px;
+            padding: 20px;
+
+        }
+
+        .formBlock input[type="radio"] {
+            margin-right: 20px;
+            margin-left: 20px;
+
+
+        }
+
+        .formBlock input[type="checkbox"] {
+
+            margin-left: 20;
+            margin-bottom: 10px;
+
+        }
+
+        .formBlock input[type="submit"],
+        .formBlock button {
+            margin-top: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background-color: darkblue;
+            color: white;
+            cursor: pointer;
+        }
+
+        .formBlock input[type="submit"]:hover,
+        .formBlock button:hover {
+            background-color: rgb(135, 135, 172);
+        }
+
+        .error-message {
+            color: red;
+            display: none;
+            margin-top: 5px;
+        }
+
+        #dataTable table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #dataTable td {
+            border: 3px solid blue;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        #dataTable {
+
+            margin-top: 10px;
+            width: 400px;
+
+            border: 3px solid blue
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="formBlock">
+        <h2>Регистрация</h2>
+        <form id="dataReg">
+            <div>
+                <label for="login">Логин</label><br /> <input type="text" name="login" required />
+                <span class="error-message" id="login-error">Введите логин латинскими буквами</span>
+            </div>
+            <div>
+                <label for="pass">Пароль</label><br /><input type="password" name="pass" required /><br />
+                <span class="error-message" id="pass-error">Длина пароля должна быть 3-10 символов</span>
+            </div>
+            <div><label for="passC">Подтверждение</label><br /><input type="password" name="passC" required /><br />
+                <span class="error-message" id="passC-error">Пароль не совпадает</span><br />
+            </div>
+            <label for="surname">Полное имя</label><input type="text" name="surname" required /><br />
+
+            <span class="error-message" id="name-error">Заполните поле</span><br />
+
+            <div><label for="pol">Пол</label><br />
+                <div class="radio">
+                    <input type="radio" name="pol" value="женский" required />Женский
+                    <input type="radio" name="pol" value="мужской" required />Мужской
+                    <span class="error-message" id="pol-error">Сделайте свой выбор</span><br />
+                </div>
+
+            </div>
+            <div> <label> Специализация:</label><br />
+
+                <input type="checkbox" name="s" value="Дизайн" /> Дизайн<br />
+                <input type="checkbox" name="s" value="Администрирование" /> Администрирование<br />
+                <input type="checkbox" name="s" value="Программирование" /> Программирование<br />
+                <span class="error-message" id="spec-error">Сделайте свой выбор</span><br />
+            </div>
+            <div> <label>Должность:</label> <br />
+                <select name="top" required>
+                    <option value="" selected>--------------Сделайте выбор---------------</option>
+                    <option value="Директор">Директор</option>
+                    <option value="Заместитель директора">Заместитель директора </option>
+                    <option value="Руководитель проекта">Руководитель проекта</option>
+                    <option value="Начальник отдела">Начальник отдела</option>
+                    <option value="Программист">Программист</option>
+                    <option value="Дизайнер">Дизайнер</option>
+                    <option value="Консультан">Консультант</option>
+                    <option value="Служащий">Служащий</option>
+                </select>
+            </div>
+            <span class="error-message" id="position-error">Сделайте свой выбор</span><br />
+            <input type="submit" value="Регистрация" />
+            <button type="reset">Сброс</button>
+        </form>
+
+        <div class="tableBlock hidden" id="allData">
+            <h2>Данные сотрудника</h2>
+            <table id="dataTable" border="1">
+
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <script>
+            const form = document.getElementById('dataReg');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // предотвращаем отправку формы
+                const formData = new FormData(event.target); //новый обьект formData собирает все данные из формы
+                let valid = true;
+                //login
+                const login = formData.get('login');
+                const loginError = document.getElementById('login-error');
+                const loginRegex = /^[^\u0400-\u04FF]*$/;//исключаю кириллицу
+                if (!loginRegex.test(login)) {
+                    loginError.textContent = 'Используйте только латинские буквы, цифры и символы';
+                    loginError.style.display = 'block';
+                    valid = false;
+                } else {
+                    loginError.textContent = '';
+                    loginError.style.display = 'none';
+                }
+                //пароль
+                const pass = formData.get('pass');
+                const passC = formData.get('passC');
+                const passErr = document.getElementById('pass-error');
+                const passCErr = document.getElementById('passC-error');
+
+                if (pass.length < 3 || pass.length > 10) {
+                    passErr.textContent = "Длина пароля должна быть от 3 до 10 символов";
+                    passErr.style.display = 'block';
+                    valid = false;
+                }
+                else {
+                    passErr.textContent = "";
+                    passErr.style.display = 'none';
+                }
+                //совпадение проверка
+                if (pass !== passC) {
+                    passCErr.textContent = "Пароль и подтверждение должны совпадать";
+                    passCErr.style.display = 'block';
+                    valid = false;
+                }
+                else {
+                     passCErr.textContent = "";
+                    passCErr.style.display = 'none';
+                }
+
+
+                const specChecked = formData.getAll('s').length > 0;  // проверяем, выбран ли хотя бы один чекбокс
+                const specError = document.getElementById('spec-error');
+                if (!specChecked) {
+                    specError.style.display = 'block';
+                    valid = false;
+                } else {
+                    specError.style.display = 'none';
+                }
+
+
+                // Проверяем, выбрана ли должность
+                const posSelected = formData.get('top') !== "";
+                const posError = document.getElementById('position-error');
+                if (!posSelected) {
+                    posError.style.display = 'block';
+                    valid = false;
+                } else {
+                    posError.style.display = 'none';
+                }
+
+                // Если оба выбора сделаны, продолжаем
+                if (valid && specChecked && posSelected) {
+                    const login = formData.get('login');
+                    const surname = formData.get('surname');
+                    const pol = formData.get('pol');
+                    const spec = formData.getAll('s')[0];
+                    const position = formData.get('top');
+                    const data = [
+                        { field: 'Логин', value: login },
+                        { field: 'Полное имя', value: surname },
+                        { field: 'Пол', value: pol },
+                        { field: 'Специализация', value: spec },
+                        { field: 'Должность', value: position }
+                    ];
+                    alert("Ваши данные приняты");
+
+                    const tbody = document.querySelector('#dataTable tbody');//создаем таблицу                  
+                    tbody.innerHTML = '';
+
+                    //создаем таблицу  
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        const fieldCell = document.createElement('td');
+                        const valueCell = document.createElement('td');
+
+                        fieldCell.textContent = item.field;
+                        valueCell.textContent = item.value;
+
+                        row.appendChild(fieldCell);
+                        row.appendChild(valueCell);
+                        tbody.appendChild(row);
+
+                    });
+                    document.getElementById('allData').classList.remove('hidden');//показать таблицу 
+                    form.reset();
+                }
+            });
+
+
+            function checkAll() {
+                let oneChecked = false; // отслеживаем отмеченный чекбокс. Я хочу чтоб допускался только 1 выбор
+
+                for (let i = 0; i < form.length; i++) {
+                    if (form.elements[i].type == "checkbox" && form.elements[i].checked) {
+                        oneChecked = true; // если найден отмеченный чекбокс
+                        break; 
+                    }
+                }
+
+                if (oneChecked) {
+                    for (let i = 0; i < form.length; i++) {
+                        if (form.elements[i].type == "checkbox" && !form.elements[i].checked) {
+                            form.elements[i].disabled = true; // отключение всех неотмеченных чекбоксов
+                        }
+                    }
+                } else {
+                    for (let i = 0; i < form.length; i++) {
+                        if (form.elements[i].type == "checkbox") {
+                            form.elements[i].disabled = false; // включение всех чекбоксов
+                        }
+                    }
+                }
+
+
+            //     for (let i = 0; i < form.length; i++) {
+            //         if (form.elements[i].type == "checkbox" && form.elements[i].checked)
+            //             // numChecked++;
+            //     }
+
+            //     if (numChecked == maxChecked) {
+            //         for (let i = 0; i < document.forms["form"].elements.length; i++)
+            //             if (form.elements[i].type == "checkbox" && !form.elements[i].checked)
+            //                 form.elements[i].disabled = true;
+            //     }
+            //     else {
+            //         for (let i = 0; i < form.length; i++)
+            //             if (form.elements[i].type == "checkbox")
+            //                 form.elements[i].disabled = false;
+            //     }
+            }
+
+            document.querySelectorAll('input[name="s"]').forEach(checkbox => {
+                checkbox.addEventListener('click', checkAll);
+            });
+
+        </script>
+
+</body>
+
+</html>

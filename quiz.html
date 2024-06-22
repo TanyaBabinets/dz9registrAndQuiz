@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            flex-direction: column;
+            text-align: center;       
+             background-image: url('img/quiz.jpg');
+             font-size: 24px;
+        }
+
+        .quizBlock {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: beige;
+            text-align: left;
+            border: 5px solid green;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-top: 10%;
+        }
+
+        #quizForm input[type="checkbox"] {
+
+            margin-left: 20;
+            margin-bottom: 10px;
+
+        }
+         .quizBlock label {
+            display: block;
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+        .quizBlock button{
+            margin-bottom: 5px;
+            margin-top: 5px;
+            background-color: lime;
+            width:160px;
+            height: 40px;
+            font-size: 18px;
+        }
+         .quizBlock h2{
+            color:green;
+         }
+    </style>
+</head>
+
+<body>
+    <div class="quizBlock">
+        <h2>Music Quiz</h2>
+        <form id="quizForm">
+            <div id="questions"></div>
+            <div id="answers"></div>
+            <div id="timer">Время на ответ: <span id="timeLeft">10</span> сек</div>
+            <button type="submit" id="submitBtn">Отправить</button>
+        </form>
+    </div>
+    <script>
+        const questions = [
+            {
+                 question: "Какие произведения написал Петр Ильич Чайковский?",
+                answers: [
+                    { text: "Лебединое озеро", correct: true },
+                    { text: "Лунная соната", correct: false },
+                    { text: "Щелкунчик", correct: true },
+                    { text: "Симфония №9", correct: false }
+                ]
+            },
+             {
+                question: "Кто является автором оперы 'Аида'?",
+                answers: [
+                    { text: "Джузеппе Верди", correct: true },
+                    { text: "Йозеф Гайдн", correct: false },
+                    { text: "Гектор Берлиоз", correct: false },
+                    { text: "Петр Ильич Чайковский", correct: false }
+                ]
+            },
+              {
+                question: "Кто является автором произведения 'Карнавал животных'?",
+                answers: [
+                    { text: "Камиль Сен-Санс", correct: true },
+                    { text: "Йозеф Гайдн", correct: false },
+                    { text: "Антонин Дворжак", correct: false },
+                    { text: "Фредерик Шопен", correct: false }
+                ]
+            },
+
+            {
+                question: "Кто из этих композиторов известен своими операми?",
+                answers: [
+                    { text: "Джузеппе Верди", correct: true },
+                    { text: "Иоганн Себастьян Бах", correct: false },
+                    { text: "Россини", correct: true },
+                    { text: "Вагнер", correct: true }
+                ]
+            },
+            {
+                question: "Кто из этих композиторов написал балет 'Щелкунчик'?",
+                answers: [
+                    { text: "Фредерик Шопен", correct: false },
+                    { text: "Людвиг ван Бетховен", correct: false },
+                    { text: "Петр Ильич Чайковский", correct: true },
+                    { text: "Антонин Дворжак", correct: false }
+                ]
+            },
+             {
+                question: "Какие произведения написал Ференц Лист?",
+                answers: [
+                    { text: "Венгерские рапсодии", correct: true },
+                    { text: "Этюды для фортепиано", correct: true },
+                    { text: "Лунная соната", correct: false },
+                    { text: "Реквием", correct: false }
+                ]
+            },
+             {
+                question: "Кто является автором оперы 'Волшебная флейта'?",
+                answers: [
+                    { text: "Вольфганг Амадей Моцарт", correct: true },
+                    { text: "Антонин Дворжак", correct: false },
+                    { text: "Петр Ильич Чайковский", correct: false },
+                    { text: "Феликс Мендельсон", correct: false }
+                ]
+            },
+             {
+                question: "Какие произведения написал Людвиг ван Бетховен?",
+                answers: [
+                    { text: "Симфония №5", correct: true },
+                    { text: "Лунная соната", correct: true },
+                    { text: "Симфония №40", correct: false },
+                    { text: "К Элизе", correct: true }
+                ]
+            },
+             {
+                question: "Кто из этих композиторов известен своими фортепианными этюдами?",
+                answers: [
+                    { text: "Фредерик Шопен", correct: true },
+                    { text: "Йозеф Гайдн", correct: false },
+                    { text: "Гектор Берлиоз", correct: false },
+                    { text: "Рихард Вагнер", correct: false }
+                ]
+            },
+             {
+                question: "Кто из композиторов написал 'Лунную сонату'?",
+                answers: [
+                    { text: "Людвиг ван Бетховен", correct: true },
+                    { text: "Антонин Дворжак", correct: false },
+                    { text: "Ференц Лист", correct: false },
+                    { text: "Фредерик Шопен", correct: false }
+                ]
+            },
+            {
+                question: "В честь какого композитора назван аэропорт в Варшаве?",
+                answers: [
+                    { text: "Фредерик Шопен", correct: true },
+                    { text: "Ференц Лист", correct: false },
+                    { text: "Йозеф Гайдн", correct: false },
+                    { text: "Рихард Вагнер", correct: false }
+                ]
+            },
+            {
+                question: "Кто из этих музыкантов является известным джазовым трубачом?",
+                answers: [
+                    { text: "Луи Армстронг", correct: true },
+                    { text: "Джон Колтрейн", correct: false },
+                    { text: "Майлс Дэвис", correct: true },
+                    { text: "Бенни Гудман", correct: false }
+                ]
+            },
+        ];
+
+        let currentQIndex = 0;
+        let score = 0;
+        let timer;
+        let countdown;
+
+        const quizForm = document.getElementById('quizForm');
+        const questEl = document.getElementById('questions');
+        const answersEl = document.getElementById('answers');
+         const timerEl = document.getElementById('timer');
+            const timeLeftEl = document.getElementById('timeLeft');
+
+    // Подсчёт общего количества правильных ответов
+    const totalCorrectAnswers = questions.reduce((total, question) => {
+        return total + question.answers.filter(answer => answer.correct).length;
+    }, 0);
+
+        // Функция для загрузки следующего вопроса
+        function nextQ() {
+            resetForm(); // Очистка предыдущих ответов
+            if (currentQIndex < questions.length) {
+                const question = questions[currentQIndex];
+                questEl.innerText = question.question;
+                question.answers.forEach(answer => {
+                    const label = document.createElement('label');//создаем элементы
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = answer.text;
+              
+                    checkbox.dataset.correct = answer.correct.toString();
+                    label.appendChild(checkbox);
+                    label.appendChild(document.createTextNode(answer.text));
+                    answersEl.appendChild(label);
+                });
+                startTimer();
+            } else {
+                finishQuiz();
+            }
+        }
+        function resetForm() {
+            while (answersEl.firstChild) {
+                answersEl.removeChild(answersEl.firstChild);
+            }
+            clearTimeout(timer);
+            clearInterval(countdown);
+        }
+        // Функция для обработки отправки формы
+        function submitForm(event) {
+            event.preventDefault();
+            clearTimeout(timer); // Остановка таймера, так как пользователь отправил ответ
+            clearInterval(countdown); // Остановка интервала обратного отсчета
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            let userAnswers = Array.from(checkboxes);
+
+            let correctCount = 0;
+
+            userAnswers.forEach(cb => {
+                if (cb.dataset.correct === 'true') {
+                    correctCount++;
+                }
+            });
+            score += correctCount; // Увеличиваем счетчик на количество правильных ответов
+            currentQIndex++; 
+
+            nextQ();
+        }
+
+        function finishQuiz() {
+            const totalCorrectAnswers = questions.reduce((total, question) => {
+                return total + question.answers.filter(answer => answer.correct).length;
+            }, 0);
+            alert(`Поздравляем! Тест сдан на количество баллов: ${score} из ${totalCorrectAnswers}`);
+
+            questEl.innerText = `Поздравляем! Тест сдан на количество баллов: ${score} из ${totalCorrectAnswers}`;
+            timerEl.style.display = 'none';
+            resetForm();
+        }
+
+        // таймер
+        function startTimer() {
+            let timeLeft = 10;
+            timeLeftEl.innerText = timeLeft; // Отображаем начальное время
+            countdown = setInterval(() => {
+                timeLeft--;
+                timeLeftEl.innerText = timeLeft; // Обновляем отображение таймера
+                if (timeLeft <= 0) {
+                    clearInterval(countdown); // stop timer
+                    currentQIndex++;
+                    nextQ();
+                }
+            }, 1000);
+            timer = setTimeout(() => {
+                clearInterval(countdown); // Останавливаем обратный отсчет
+                currentQIndex++;
+                nextQ();
+            }, 10000); // 10 секунд
+        }
+
+        quizForm.addEventListener('submit', submitForm);
+        nextQ();
+
+    </script>
+</body>
+
+</html>
